@@ -43,7 +43,7 @@ The removal of aquatic species from rivers, lakes, seas, and oceans for food, ra
 
 > [!note] Para ficar de olho
 > - Environmental degradation due to mining activities.
-> - Use of advanced machinery by large corporations increases extraction efficiency but also environmental harm.
+> - Use of advanced machinery by large corporations increases extraction efficiency but also environmental harm because it can lead to damage.
 > - Traditional mining methods are less efficient but often more sustainable.
 
 ## Questions for Reflection

@@ -1,6 +1,6 @@
 import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer } from '@react-pdf/renderer';
 import parse from 'html-react-parser';
-import { IMAGE_BASE_64 } from './contants';
+import { IMAGE_BASE_64, PENCIL_ICON } from './contants';
 
 const HEX_COLORS = {
     PRIMARY_BLUE: "#08035D",
@@ -136,7 +136,7 @@ const contentStyle = StyleSheet.create({
         alignItems: 'center', // Centraliza horizontalmente
         flexWrap: 'wrap',
         maxWidth: "100%",
-        textOverflow: "ellipsis"
+        flex: 1
     },
     divider: {
         width: 40,
@@ -153,34 +153,46 @@ const contentStyle = StyleSheet.create({
 
 });
 
+const calloutStyle = StyleSheet.create({
+    block: {
+        padding: 16,
+        paddingVertical: 20,
+        borderRadius: 8,
+        marginVertical: 16,
+        borderWidth: 1,
+    },
+    content: {
+        paddingRight: 4,
+    },
+    titleBlock: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 2,
+    },
+    title: {
+        fontSize: 14,
+        fontWeight: "bold",
+        paddingTop: 3,
+    },
+    icon: {
+        height: 20,
+        width: 20,
+    }
+})
 
 const calloutNoteStyle = StyleSheet.create({
     block: {
-        padding: 16,
-        paddingBottom: 20,
-        backgroundColor: "rgba(96, 165, 250, 0.2)",
-        borderWidth: 1,
-        borderColor: "rgba(37, 99, 235, 0.2)",
-        borderRadius: 8,
-        marginBottom: 24,
+        backgroundColor: "#DFEDFE",
+        borderColor: "#5CA6FF",
     },
     title: {
-        fontSize: 16,
-        fontWeight: "bold",
-        color: "rgb(59, 130, 246)",
-        flexDirection: "row",
-        alignItems: "flex-start",
-        gap: 8,
+        color: "#498CF6",
     },
-    body: {
-        // Aqui você pode adicionar estilos adicionais para o corpo, se necessário
-    }
+    icon: {
+        transform: "scaleX(-1)",
+    },
 });
 
-
-function existsAttribute(object: any, attribute: any): boolean {
-    return !(attribute in object && object[attribute] !== undefined && object[attribute] !== "");
-}
 
 const renderNode = (node: any) => {
 
@@ -188,11 +200,11 @@ const renderNode = (node: any) => {
         if (node.data === ":\n" || node.data === "\n") {
             return null
         }
-        return node.data;
+        return node.data
     }
 
     if (node.type === 'tag') {
-        // console.log(node)
+        console.log(node)
         switch (node.name) {
             case 'h1':
                 return (
@@ -269,20 +281,19 @@ const renderNode = (node: any) => {
                     const filteredChildren = node.children
                         .filter((child: any) => !(child.type === 'text' && (child.data === ':\\n' || child.data === '\n')))
 
-                    console.log(filteredChildren)
-
                     return (
-                        <View style={calloutNoteStyle.block}>
+                        <View style={[calloutStyle.block, calloutNoteStyle.block]}>
                             {filteredChildren.map((child: any, index: number) => {
-
-                                if (existsAttribute(child.attribs, "data-callout-title")) {
+                                if (child.attribs["data-callout-title"] == "") {
                                     return (
-                                        <Text style={calloutNoteStyle.title}>{child.data}</Text>
+                                        <View style={[calloutStyle.titleBlock]}>
+                                            <Image style={[calloutStyle.icon, calloutNoteStyle.icon]} src={PENCIL_ICON}></Image>
+                                            <Text style={[calloutStyle.title, calloutNoteStyle.title]}>{child.children[0].data}</Text>
+                                        </View>
                                     );
                                 }
-
                                 return (
-                                    <View key={index}>
+                                    <View key={index} style={calloutStyle.content}>
                                         {renderNode(child)}
                                     </View>
                                 );
@@ -290,13 +301,6 @@ const renderNode = (node: any) => {
                         </View>
                     );
                 }
-                // if (node.attribs['data-callout-title'] === "") {
-                //     return (
-                //         <Text style={calloutNoteStyle.title}>
-                //             {node.children[0]?.data}
-                //         </Text>
-                //     );
-                // }
 
                 return (
                     <View>
