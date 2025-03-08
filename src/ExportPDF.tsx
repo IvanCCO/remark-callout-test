@@ -1,4 +1,4 @@
-import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer } from '@react-pdf/renderer';
+import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer, Font } from '@react-pdf/renderer';
 import parse from 'html-react-parser';
 import { IMAGE_BASE_64, PENCIL_ICON, QUESTION_ICON } from './contants';
 
@@ -85,7 +85,6 @@ const contentStyle = StyleSheet.create({
         fontWeight: "bold",
         paddingBottom: 2,
         marginVertical: 12,
-        width: "70%",
         borderBottom: "2px solid " + HEX_COLORS.PRIMARY_BLUE
     },
     h3: {
@@ -217,6 +216,10 @@ const calloutDefaultStyle = StyleSheet.create({
     },
 });
 
+Font.registerEmojiSource({
+    format: 'png',
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/',
+});
 
 const renderNode = (node: any) => {
 
