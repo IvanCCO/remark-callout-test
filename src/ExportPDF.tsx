@@ -1,5 +1,98 @@
 import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer } from '@react-pdf/renderer';
 import parse from 'html-react-parser';
+import { IMAGE_BASE_64 } from './contants';
+
+
+const contentStyle = StyleSheet.create({
+    h1: {
+        fontSize: 24,
+        fontWeight: "bold"
+    },
+    h2: {
+        fontSize: 20,
+        fontWeight: "bold"
+    },
+    h3: {
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    divider: {
+        width: 40,
+        height: 40,
+        alignSelf: "center",
+        marginVertical: 30
+    },
+})
+
+const documentStyle = StyleSheet.create({
+    coverPage: {
+        backgroundColor: "#512DA8",
+        color: "#FFF",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+    },
+    coverLogo: {
+        width: 100,
+        height: 100,
+        marginBottom: 20,
+    },
+    coverTitle: {
+        fontSize: 28,
+        fontWeight: "bold",
+    },
+    coverSubtitle: {
+        fontSize: 18,
+        marginTop: 10,
+    },
+    page: {
+        paddingHorizontal: 0,
+    },
+    header: {
+        paddingHorizontal: 0,
+        paddingBottom: 0,
+    },
+    footer: {
+        position: 'absolute',
+        bottom: 10,
+        right: 20,
+        fontSize: 16,
+        color: '#08035D',
+        fontWeight: "bold"
+    },
+    image_logo: {
+        width: 60,
+        height: 60,
+    },
+    content: {
+        border: "2px solid purple",
+        paddingTop: 20,
+        paddingBottom: 50,
+        paddingLeft: 60,
+        paddingRight: 60,
+    },
+    backgroundYellow: {
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        width: "5%",
+        height: "35%",
+        backgroundColor: "#F5CD05",
+        borderTopRightRadius: 100,
+    },
+    backgroundBlue: {
+        position: "absolute",
+        right: 0,
+        top: 0,
+        width: "5%",
+        height: "35%",
+        borderBottomLeftRadius: 100,
+        backgroundColor: "#08035D",
+    },
+
+});
+
+
 
 interface HtmlToPdfComponentsProps {
     html: string;
@@ -15,7 +108,7 @@ const renderNode = (node: any) => {
         switch (node.name) {
             case 'h1':
                 return (
-                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+                    <Text style={contentStyle.h1}>
                         {node.children.map((child: any, index: number) => renderNode(child))}
                     </Text>
                 );
@@ -81,6 +174,10 @@ const renderNode = (node: any) => {
                         </Text>
                     );
                 }
+            case 'hr':
+                return (
+                    <Image style={documentStyle.image_divider} src={IMAGE_BASE_64} />
+                )
             default:
                 return (
                     <Text>
@@ -92,45 +189,13 @@ const renderNode = (node: any) => {
 
     return null;
 };
-
-const styles = StyleSheet.create({
-    page: {
-        paddingTop: 20,
-        paddingBottom: 40,
-        paddingHorizontal: 40,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-        paddingBottom: 5,
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 10,
-        left: 0,
-        right: 0,
-        textAlign: 'center',
-        fontSize: 10,
-        color: '#666',
-    },
-    image_logo: {
-        marginVertical: 10,
-        marginHorizontal: 10,
-        width: 60,
-        height: 60,
-    },
-});
-
 const HtmlToPdfComponents: React.FC<HtmlToPdfComponentsProps> = ({ html }) => {
     console.log(html)
     const options = {
         replace: (node: any) => renderNode(node),
     };
 
-
-    return <View>{parse(html, options)}</View>;
+    return <View style={documentStyle.content}>{parse(html, options)}</View>;
 };
 interface MarkdownText {
     text: string;
@@ -142,10 +207,18 @@ const MyDocument = ({ html }: { html: string }) => (
         author='Brio Educação'
         language='pt-BR'
     >
-        <Page size="A4" style={styles.page}>
-            <View style={styles.header}>
-                <Image style={styles.image_logo} src="https://static.wixstatic.com/media/41893d_0a71ebc4ef5b4562a90d766b04d77088~mv2.png/v1/fit/w_2500,h_1330,al_c/41893d_0a71ebc4ef5b4562a90d766b04d77088~mv2.png" />
-                <Text>Brio Educação</Text>
+        {/* 📌 Capa do documento */}
+        <Page size="A4" style={documentStyle.coverPage}>
+            <Image style={documentStyle.coverLogo} src={IMAGE_BASE_64} />
+            <Text style={documentStyle.coverTitle}>História do Brasil</Text>
+            <Text style={documentStyle.coverSubtitle}>Brio Educação</Text>
+        </Page>
+
+        <Page size="A4" style={documentStyle.page}>
+            <View style={documentStyle.backgroundYellow} fixed />
+            <View style={documentStyle.backgroundBlue} fixed />
+            <View style={documentStyle.header} fixed>
+                <Image style={documentStyle.image_logo} src={IMAGE_BASE_64} />
             </View>
 
             {/* Conteúdo principal */}
@@ -153,8 +226,9 @@ const MyDocument = ({ html }: { html: string }) => (
 
             {/* Rodapé com número da página */}
             <Text
-                style={styles.footer}
-                render={({ pageNumber, totalPages }) => `${pageNumber}/${totalPages}`}
+                style={documentStyle.footer}
+                fixed
+                render={({ pageNumber }) => `${pageNumber}`}
             />
         </Page>
     </Document>
@@ -164,8 +238,8 @@ const MyDocument = ({ html }: { html: string }) => (
 export default function ExportPDF({ text }: MarkdownText) {
     return (
         <PDFViewer
-        height={1000}
-        width={1000}
+            height={1000}
+            width={1000}
         // document={<MyDocument html={text} />}
         // fileName="document.pdf"
         >
