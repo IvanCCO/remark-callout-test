@@ -12,57 +12,36 @@ import { useState } from "react";
 
 
 const md = `
-## 1. **Plant Extractivism**
-   - **Definition**: The removal of plant-based resources such as wood, latex, fruits, seeds, and other plant materials.
-   - **Examples**:
-     - Logging for timber and paper production.
-     - Harvesting latex for rubber manufacturing.
-     - Collecting fruits, seeds, and medicinal plants.
-   - **Impacts**:
-     - Indiscriminate exploitation in developing countries leads to deforestation.
-     - Many plant species face the risk of extinction.
-     - Destruction of ecosystems and biodiversity.
+## Animal Extractivism
+### Definition
+The pursuit and slaughter of animals for food, fur, and other animal-derived resources.
+### Examples
+- Hunting for meat, leather, and fur.
+- Fishing for food and industrial raw materials.
+### Impacts
+- Overhunting and overfishing threaten species with extinction.
+- Disruption of food chains and ecosystems.
+- Modern efforts to regulate and control these practices are ongoing.
 
 ---
 
-## 2. **Animal Extractivism**
-   - **Definition**: The pursuit and slaughter of animals for food, fur, and other animal-derived resources.
-   - **Examples**:
-     - Hunting for meat, leather, and fur.
-     - Fishing for food and industrial raw materials.
-   - **Impacts**:
-     - Overhunting and overfishing threaten species with extinction.
-     - Disruption of food chains and ecosystems.
-     - Modern efforts to regulate and control these practices are ongoing.
+## Fishing
+
+### Definition
+The removal of aquatic species from rivers, lakes, seas, and oceans for food, raw materials, and leisure.
+
+### Examples
+- Commercial fishing for food supply.
+- Recreational fishing as a leisure activity.
+
+### Impacts
+- Overfishing depletes fish populations and disrupts marine ecosystems.
+- Bycatch (unintentional capture of non-target species) harms biodiversity.
+- Fishing is a vital economic activity for many communities.
 
 ---
 
-## 3. **Fishing**
-   - **Definition**: The removal of aquatic species from rivers, lakes, seas, and oceans for food, raw materials, and leisure.
-   - **Examples**:
-     - Commercial fishing for food supply.
-     - Recreational fishing as a leisure activity.
-   - **Impacts**:
-     - Overfishing depletes fish populations and disrupts marine ecosystems.
-     - Bycatch (unintentional capture of non-target species) harms biodiversity.
-     - Fishing is a vital economic activity for many communities.
-
----
-
-## 4. **Mineral Extractivism**
-   - **Definition**: The removal of mineral resources from continental or maritime areas.
-   - **Examples**:
-     - Mining for metallic minerals like iron ore.
-     - Extraction of non-metallic minerals like sea salt.
-   - **Impacts**:
-     - Environmental degradation due to mining activities.
-     - Use of advanced machinery by large corporations increases extraction efficiency but also environmental harm.
-     - Traditional mining methods are less efficient but often more sustainable.
-
----
-
-> [!note]
-> **Para ficar de olho**
+> [!note] Para ficar de olho
 > - Environmental degradation due to mining activities.
 > - Use of advanced machinery by large corporations increases extraction efficiency but also environmental harm.
 > - Traditional mining methods are less efficient but often more sustainable.
@@ -73,17 +52,6 @@ const md = `
 3. How does extractivism in developing countries differ from that in developed countries?
 4. What role does technology play in modern extractivism, and how can it be used sustainably?
 5. How can local communities benefit from extractivism without compromising their natural resources?
-
----
-
-## Suggestions for Further Discussion
-- Explore case studies of successful sustainable extractivism practices.
-- Discuss the role of international regulations in controlling extractivism.
-- Analyze the social and economic impacts of extractivism on indigenous communities.
-
----
-
-**Don't forget to subscribe, like, and share your suggestions for future videos!**
 `
 
 function App() {

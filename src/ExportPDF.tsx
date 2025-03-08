@@ -2,27 +2,10 @@ import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFView
 import parse from 'html-react-parser';
 import { IMAGE_BASE_64 } from './contants';
 
-
-const contentStyle = StyleSheet.create({
-    h1: {
-        fontSize: 24,
-        fontWeight: "bold"
-    },
-    h2: {
-        fontSize: 20,
-        fontWeight: "bold"
-    },
-    h3: {
-        fontSize: 16,
-        fontWeight: "bold"
-    },
-    divider: {
-        width: 40,
-        height: 40,
-        alignSelf: "center",
-        marginVertical: 30
-    },
-})
+const HEX_COLORS = {
+    PRIMARY_BLUE: "#08035D",
+    PRIMARY_YELLOW: "#F5CD05"
+}
 
 const documentStyle = StyleSheet.create({
     coverPage: {
@@ -65,7 +48,6 @@ const documentStyle = StyleSheet.create({
         height: 60,
     },
     content: {
-        border: "2px solid purple",
         paddingTop: 20,
         paddingBottom: 50,
         paddingLeft: 60,
@@ -77,7 +59,7 @@ const documentStyle = StyleSheet.create({
         bottom: 0,
         width: "5%",
         height: "35%",
-        backgroundColor: "#F5CD05",
+        backgroundColor: HEX_COLORS.PRIMARY_YELLOW,
         borderTopRightRadius: 100,
     },
     backgroundBlue: {
@@ -87,24 +69,130 @@ const documentStyle = StyleSheet.create({
         width: "5%",
         height: "35%",
         borderBottomLeftRadius: 100,
-        backgroundColor: "#08035D",
+        backgroundColor: HEX_COLORS.PRIMARY_BLUE,
+    },
+
+});
+
+const contentStyle = StyleSheet.create({
+    h1: {
+        fontSize: 24,
+        fontWeight: "bold",
+        marginVertical: 14,
+    },
+    h2: {
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingBottom: 2,
+        marginVertical: 12,
+        width: "70%",
+        borderBottom: "2px solid " + HEX_COLORS.PRIMARY_BLUE
+    },
+    h3: {
+        fontSize: 14,
+        fontWeight: "bold",
+        marginVertical: 8
+    },
+    h4: {
+        fontSize: 12,
+        fontWeight: "bold",
+        marginVertical: 4
+    },
+    p: {
+        fontSize: 12,
+        marginBottom: 5,
+        textAlign: "justify",
+        lineHeight: 1.4
+    },
+    ul: {
+        paddingLeft: 4,
+    },
+    liBullet: {
+        marginHorizontal: 2,
+        textAlign: 'center',
+        height: 20, // Defina a altura da bolinha
+        width: 20, // Defina a largura da bolinha
+        display: 'flex',
+        justifyContent: 'flex-start', // A bolinha vai se alinhar ao topo
+        alignItems: 'center', // Alinha a bolinha horizontalmente no centro
+    },
+    olNumber: {
+        fontSize: 10,
+        fontWeight: "bold",
+        marginHorizontal: 2,
+        paddingTop: 4,
+        textAlign: 'center',
+        height: 20, // Defina a altura da bolinha
+        width: 20, // Defina a largura da bolinha
+        display: 'flex',
+        justifyContent: 'flex-start', // A bolinha vai se alinhar ao topo
+        alignItems: 'center', // Alinha a bolinha horizontalmente no centro
+    },
+    li: {
+        paddingTop: 3,
+        fontSize: 12,
+        display: 'flex',
+        justifyContent: 'center', // Centraliza verticalmente
+        alignItems: 'center', // Centraliza horizontalmente
+        flexWrap: 'wrap',
+        maxWidth: "100%",
+        textOverflow: "ellipsis"
+    },
+    divider: {
+        width: 40,
+        height: 40,
+        alignSelf: "center",
+        marginVertical: 30
+    },
+    div: {
+        marginBottom: 10,
+        padding: 8,
+        backgroundColor: "#f5f5f5",
+        borderRadius: 5
     },
 
 });
 
 
+const calloutNoteStyle = StyleSheet.create({
+    block: {
+        padding: 16,
+        paddingBottom: 20,
+        backgroundColor: "rgba(96, 165, 250, 0.2)",
+        borderWidth: 1,
+        borderColor: "rgba(37, 99, 235, 0.2)",
+        borderRadius: 8,
+        marginBottom: 24,
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "rgb(59, 130, 246)",
+        flexDirection: "row",
+        alignItems: "flex-start",
+        gap: 8,
+    },
+    body: {
+        // Aqui você pode adicionar estilos adicionais para o corpo, se necessário
+    }
+});
 
-interface HtmlToPdfComponentsProps {
-    html: string;
+
+function existsAttribute(object: any, attribute: any): boolean {
+    return !(attribute in object && object[attribute] !== undefined && object[attribute] !== "");
 }
 
 const renderNode = (node: any) => {
+
     if (node.type === 'text') {
+        if (node.data === ":\n" || node.data === "\n") {
+            return null
+        }
         return node.data;
     }
 
     if (node.type === 'tag') {
-        console.log(node)
+        // console.log(node)
         switch (node.name) {
             case 'h1':
                 return (
@@ -114,19 +202,19 @@ const renderNode = (node: any) => {
                 );
             case 'h2':
                 return (
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <Text style={contentStyle.h2}>
                         {node.children.map((child: any, index: number) => renderNode(child))}
                     </Text>
                 );
             case 'h3':
                 return (
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                    <Text style={contentStyle.h3}>
                         {node.children.map((child: any, index: number) => renderNode(child))}
                     </Text>
                 );
             case 'p':
                 return (
-                    <Text style={{ fontSize: 12 }}>
+                    <Text style={contentStyle.p}>
                         {node.children.map((child: any, index: number) => renderNode(child))}
                     </Text>
                 );
@@ -144,39 +232,80 @@ const renderNode = (node: any) => {
                 );
             case 'ul':
                 return (
-                    <View style={{ marginLeft: 20 }}>
-                        {node.children.map((child: any, index: number) => (
-                            <Text key={index} style={{ fontSize: 12 }}>
-                                {renderNode(child)}
-                            </Text>
-                        ))}
+                    <View style={contentStyle.ul}>
+                        {node.children
+                            .filter((child: any) => !(child.type === 'text' && (child.data === ':\\n' || child.data === '\n')))
+                            .map((child: any, index: number) => (
+                                <View style={{ flexDirection: 'row', marginBottom: 4 }} key={index}>
+                                    <Text style={contentStyle.liBullet}>•</Text>
+                                    <Text style={contentStyle.li}>{renderNode(child)}</Text>
+                                </View>
+                            ))}
+                    </View>
+                );
+            case 'ol':
+                return (
+                    <View style={contentStyle.ul}>
+                        {node.children
+                            .filter((child: any) => !(child.type === 'text' && (child.data === ':\\n' || child.data === '\n')))
+                            .map((child: any, index: number) => (
+                                <View style={{ flexDirection: 'row', marginBottom: 4 }} key={index}>
+                                    <Text style={contentStyle.olNumber}>{index + 1}.</Text>
+                                    <Text style={contentStyle.li}>{renderNode(child)}</Text>
+                                </View>
+                            ))}
                     </View>
                 );
             case 'li':
                 return (
-                    <Text style={{ fontSize: 12 }}>
-                        {node.children.map((child: any, index: number) => renderNode(child))}
+                    <Text style={contentStyle.li}>
+                        {node.children
+                            .filter((child: any) => !(child.type === 'text' && (child.data === ':\\n' || child.data === '\n')))
+                            .map((child: any, index: number) => renderNode(child))}
                     </Text>
                 );
             case 'div':
                 if (node.attribs['data-callout-type'] === "note") {
+                    const filteredChildren = node.children
+                        .filter((child: any) => !(child.type === 'text' && (child.data === ':\\n' || child.data === '\n')))
+
+                    console.log(filteredChildren)
+
                     return (
-                        <View style={{ borderLeftWidth: 4, borderLeftColor: '#3498db', padding: 10, backgroundColor: '#e8f4fd' }}>
-                            {node.children.map((child: any, index: number) => (
-                                <View key={index}>{renderNode(child)}</View>
-                            ))}
+                        <View style={calloutNoteStyle.block}>
+                            {filteredChildren.map((child: any, index: number) => {
+
+                                if (existsAttribute(child.attribs, "data-callout-title")) {
+                                    return (
+                                        <Text style={calloutNoteStyle.title}>{child.data}</Text>
+                                    );
+                                }
+
+                                return (
+                                    <View key={index}>
+                                        {renderNode(child)}
+                                    </View>
+                                );
+                            })}
                         </View>
                     );
-                } else {
-                    return (
-                        <Text style={{ fontSize: 12 }}>
-                            {node.children.map((child: any, index: number) => renderNode(child))}
-                        </Text>
-                    );
                 }
+                // if (node.attribs['data-callout-title'] === "") {
+                //     return (
+                //         <Text style={calloutNoteStyle.title}>
+                //             {node.children[0]?.data}
+                //         </Text>
+                //     );
+                // }
+
+                return (
+                    <View>
+                        {node.children.map((child: any, index: number) => renderNode(child))}
+                    </View>
+                );
             case 'hr':
                 return (
-                    <Image style={documentStyle.image_divider} src={IMAGE_BASE_64} />
+                    <Image style={contentStyle.divider} src={IMAGE_BASE_64} />
                 )
             default:
                 return (
@@ -189,8 +318,14 @@ const renderNode = (node: any) => {
 
     return null;
 };
+
+
+interface HtmlToPdfComponentsProps {
+    html: string;
+}
+
 const HtmlToPdfComponents: React.FC<HtmlToPdfComponentsProps> = ({ html }) => {
-    console.log(html)
+    // console.log(html)
     const options = {
         replace: (node: any) => renderNode(node),
     };
