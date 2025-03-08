@@ -1,4 +1,4 @@
-import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer } from '@react-pdf/renderer';
 import parse from 'html-react-parser';
 
 interface HtmlToPdfComponentsProps {
@@ -163,11 +163,14 @@ const MyDocument = ({ html }: { html: string }) => (
 
 export default function ExportPDF({ text }: MarkdownText) {
     return (
-        <PDFDownloadLink
-            document={<MyDocument html={text} />}
-            fileName="document.pdf"
+        <PDFViewer
+        height={1000}
+        width={1000}
+        // document={<MyDocument html={text} />}
+        // fileName="document.pdf"
         >
-            {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
-        </PDFDownloadLink>
+            <MyDocument html={text} />
+            {/* {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')} */}
+        </PDFViewer>
     )
 }
