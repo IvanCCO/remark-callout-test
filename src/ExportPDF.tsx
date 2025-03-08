@@ -1,6 +1,6 @@
 import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer } from '@react-pdf/renderer';
 import parse from 'html-react-parser';
-import { IMAGE_BASE_64, PENCIL_ICON } from './contants';
+import { IMAGE_BASE_64, PENCIL_ICON, QUESTION_ICON } from './contants';
 
 const HEX_COLORS = {
     PRIMARY_BLUE: "#08035D",
@@ -159,7 +159,7 @@ const calloutStyle = StyleSheet.create({
         paddingVertical: 20,
         borderRadius: 8,
         marginVertical: 16,
-        borderWidth: 1,
+        borderWidth: 2,
     },
     content: {
         paddingRight: 4,
@@ -190,6 +190,30 @@ const calloutNoteStyle = StyleSheet.create({
     },
     icon: {
         transform: "scaleX(-1)",
+    },
+});
+
+const calloutWarningStyle = StyleSheet.create({
+    block: {
+        backgroundColor: "#fae5d4",
+        borderColor: "#f97316",
+    },
+    title: {
+        color: "#f97316",
+    },
+    icon: {
+    },
+});
+
+const calloutDefaultStyle = StyleSheet.create({
+    block: {
+        backgroundColor: "#E7E7E7",
+        borderColor: "#C7C3C3",
+    },
+    title: {
+        color: "#C7C3C3",
+    },
+    icon: {
     },
 });
 
@@ -277,18 +301,27 @@ const renderNode = (node: any) => {
                     </Text>
                 );
             case 'div':
-                if (node.attribs['data-callout-type'] === "note") {
+                if (["note", "warning"].includes(node.attribs["data-callout-type"])) {
+                    console.log("entrou")
                     const filteredChildren = node.children
                         .filter((child: any) => !(child.type === 'text' && (child.data === ':\\n' || child.data === '\n')))
 
+                    const calloutTypeStyle = () => {
+                        switch (node.attribs['data-callout-type']) {
+                            case "note": return { style: calloutNoteStyle, icon: PENCIL_ICON }
+                            case "warning": return { style: calloutWarningStyle, icon: QUESTION_ICON }
+                            default: return { style: calloutDefaultStyle, icon: QUESTION_ICON }
+                        }
+                    }
+
                     return (
-                        <View style={[calloutStyle.block, calloutNoteStyle.block]}>
+                        <View style={[calloutStyle.block, calloutTypeStyle().style.block]}>
                             {filteredChildren.map((child: any, index: number) => {
                                 if (child.attribs["data-callout-title"] == "") {
                                     return (
                                         <View style={[calloutStyle.titleBlock]}>
-                                            <Image style={[calloutStyle.icon, calloutNoteStyle.icon]} src={PENCIL_ICON}></Image>
-                                            <Text style={[calloutStyle.title, calloutNoteStyle.title]}>{child.children[0].data}</Text>
+                                            <Image style={[calloutStyle.icon, calloutTypeStyle().style.icon]} src={calloutTypeStyle().icon}></Image>
+                                            <Text style={[calloutStyle.title, calloutTypeStyle().style.title]}>{child.children[0].data}</Text>
                                         </View>
                                     );
                                 }

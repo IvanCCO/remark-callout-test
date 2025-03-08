@@ -46,6 +46,13 @@ The removal of aquatic species from rivers, lakes, seas, and oceans for food, ra
 > - Use of advanced machinery by large corporations increases extraction efficiency but also environmental harm because it can lead to damage.
 > - Traditional mining methods are less efficient but often more sustainable.
 
+> [!warning] Cai na prova
+> - Environmental degradation due to mining activities.
+> - Use of advanced machinery by large corporations increases extraction efficiency but also environmental harm because it can lead to damage.
+> - Traditional mining methods are less efficient but often more sustainable.
+
+---
+
 ## Questions for Reflection
 1. How can we balance the economic benefits of extractivism with its environmental impacts?
 2. What policies or practices could help reduce the risk of species extinction caused by extractivism?
