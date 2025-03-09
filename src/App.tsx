@@ -35,7 +35,7 @@ A ciência que estuda as interações entre os seres vivos e o ambiente é chama
 
 Ou seja, **"estudo da casa"**, o lugar onde os seres vivos vivem! 🏡🌱  
 
-> [!note] Ecossistemas e suas Relações  
+> [!fallback] Ecossistemas e suas Relações  
 > Os seres vivos interagem entre si e com os elementos não vivos, formando um equilíbrio natural. Se um dos componentes for alterado, todo o ecossistema pode ser afetado.  
 
 ---
@@ -60,7 +60,7 @@ Também chamados de **fatores abióticos**, incluem:
 - Luz ☀️  
 - Temperatura 🌡️  
 
-> [!note] Relação entre Seres Vivos e o Meio  
+> [!dfieobw] Relação entre Seres Vivos e o Meio  
 > Os seres vivos dependem dos fatores não vivos para sobreviver. As plantas, por exemplo, precisam de luz para realizar a fotossíntese, enquanto os animais precisam de água e oxigênio para viver.  
 
 ---
@@ -78,7 +78,7 @@ Aqui estão algumas curiosidades sobre ele:
 - Quando há pouca comida, o grupo se divide em **grupos menores** para evitar competição 🥭  
 - Para se proteger, ele se move **rápido e com agilidade** ⚡, fugindo de predadores como cobras 🐍 e onças 🐆!  
 
-> [!note] Importância do Coata-Preto  
+> [!warning] Importância do Coata-Preto  
 > Esse primata desempenha um papel fundamental no ecossistema ao espalhar sementes, ajudando na regeneração das florestas.  
 
 ---
@@ -108,7 +108,7 @@ Por exemplo:
 
 Cada ser vivo tem um habitat adequado para sua sobrevivência!  
 
-> [!note] Diferença entre Habitat e Nicho Ecológico  
+> [!example] Diferença entre Habitat e Nicho Ecológico  
 > O habitat é o "endereço" do ser vivo. Já o **nicho ecológico** representa o seu papel no ecossistema, como o que ele come e como interage com outros seres.  
 
 ---

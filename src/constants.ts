@@ -1,0 +1,4 @@
+export const HEX_COLORS = {
+    PRIMARY_BLUE: "#08035D",
+    PRIMARY_YELLOW: "#F5CD05"
+}
