@@ -64,24 +64,25 @@ const MyDocument = ({ html }: { html: string }) => (
 
             {/* Conteúdo principal */}
             <Text style={contentStyle.h1}>Exercícios</Text>
-            {Array.from({ length: 3 }).map((_, index) => (
+            {Array.from({ length: 5 }).map((_, index) => (
                 <View style={documentStyle.content} key={index} wrap>
-                    <View style={{ display: "flex", flexDirection: "row", gap: 6, marginBottom: 40 }} wrap>
-                        <Text style={{ backgroundColor: "#C7C3C3", color: "#5B5B5B", fontSize: 16, fontWeight: "bold", textAlign: "center", alignSelf: "center", borderRadius: 50, paddingVertical: 5, paddingHorizontal: 10 }} break>{index + 1}</Text>
+                    <View style={{ display: "flex", flexDirection: "row", gap: 6 }} wrap>
+                        <Text style={{ backgroundColor: "#E7E7E7", color: "#5B5B5B", fontSize: 16, fontWeight: "bold", textAlign: "center", alignSelf: "center", borderRadius: 50, paddingVertical: 5, paddingHorizontal: 10 }} break>{index + 1}</Text>
                         <Text style={{ fontSize: 14, fontWeight: "light", flex: 1 }} wrap>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptates, in dignissimos! Et magnam fugit enim magni blanditiis doloribus</Text>
                     </View>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                        <Svg key={index} height="40" width="100%">
+                    <Svg height="100" width="100%" style={{ marginTop: 40, }}>
+                        {Array.from({ length: 5 }).map((_, i) => (
                             <Line
+                                key={i}
                                 x1="0"
-                                y1={index + 10}
+                                y1={i * 25}
                                 x2="500"
-                                y2={index + 10}
+                                y2={i * 25}
                                 strokeWidth={2}
                                 stroke="rgb(155, 155, 155)"
                             />
-                        </Svg>
-                    ))}
+                        ))}
+                    </Svg>
                 </View>
             ))}
             <Text
