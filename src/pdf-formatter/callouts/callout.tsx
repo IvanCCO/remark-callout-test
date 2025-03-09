@@ -25,12 +25,12 @@ const Callout: React.FC<CalloutProps> = ({ type, title, children }) => {
     return (
         <View style={[calloutStyles.base.block, calloutConfig.style.block]} wrap>
             {title && (
-                <View style={calloutStyles.base.titleBlock} wrap>
+                <View style={calloutStyles.base.titleBlock}>
                     <Image style={[calloutStyles.base.icon, calloutConfig.style.icon]} source={calloutConfig.icon} />
                     <Text style={[calloutStyles.base.title, calloutConfig.style.title]}>{title}</Text>
                 </View>
             )}
-            <View style={calloutStyles.base.content} wrap>{children}</View>
+            <View style={calloutStyles.base.content}>{children}</View>
         </View>
     );
 };
