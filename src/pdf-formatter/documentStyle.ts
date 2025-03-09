@@ -13,8 +13,8 @@ import { HEX_COLORS } from "../constants";
 
 const documentStyle = StyleSheet.create({
   coverPage: {
-    backgroundColor: "#512DA8",
-    color: "#FFF",
+    backgroundColor: "white",
+    color: "black",
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
