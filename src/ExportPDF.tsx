@@ -1,8 +1,9 @@
-import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer, Font } from '@react-pdf/renderer';
+import { Page, Document, PDFDownloadLink, Text, View, StyleSheet, Image, PDFViewer, Font, Line, Svg } from '@react-pdf/renderer';
 import parse from 'html-react-parser';
 import { IMAGE_BASE_64, PENCIL_ICON, QUESTION_ICON } from './icons';
 import documentStyle from './pdf-formatter/documentStyle';
 import render from './pdf-formatter/render';
+import contentStyle from './pdf-formatter/contentStyle';
 
 Font.registerEmojiSource({
     format: 'png',
@@ -53,6 +54,47 @@ const MyDocument = ({ html }: { html: string }) => (
                 render={({ pageNumber }) => `${pageNumber}`}
             />
         </Page>
+
+        <Page size="A4" style={documentStyle.page}>
+            <View style={documentStyle.backgroundYellow} fixed />
+            <View style={documentStyle.backgroundBlue} fixed />
+            <View style={documentStyle.header} fixed>
+                <Image style={documentStyle.image_logo} src={IMAGE_BASE_64} />
+            </View>
+
+            {/* Conteúdo principal */}
+            <View style={documentStyle.content}>
+                <Text style={contentStyle.h1}>Exercícios</Text>
+                <View style={{ display: "flex", flexDirection: "row", gap: 6, marginBottom: 40 }}>
+                    <Text style={{ backgroundColor: "#C7C3C3", color: "#5B5B5B", fontSize: 16, fontWeight: "bold", textAlign: "center", alignSelf: "center", borderRadius: 50, paddingVertical: 5, paddingHorizontal: 10 }}>1</Text>
+                    <Text style={{ fontSize: 14, fontWeight: "light", flex: 1 }}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptates, in dignissimos! Et magnam fugit enim magni blanditiis doloribus</Text>
+                </View>
+                {Array.from({ length: 5 }).map((_, index) => (
+                    <Svg key={index} height="40" width="100%">
+                        <Line
+                            x1="0"
+                            y1={index + 10}
+                            x2="500"
+                            y2={index + 10}
+                            strokeWidth={2}
+                            stroke="rgb(155, 155, 155)"
+                        />
+                    </Svg>
+                ))}
+            </View>
+
+            <Text
+                style={documentStyle.invisiblePadding}
+                fixed
+            ></Text>
+            {/* Rodapé com número da página */}
+            <Text
+                style={documentStyle.footer}
+                fixed
+                render={({ pageNumber }) => `${pageNumber}`}
+            />
+        </Page>
+
     </Document>
 );
 
