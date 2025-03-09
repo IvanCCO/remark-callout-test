@@ -83,8 +83,6 @@ const MyDocument = ({ html }: { html: string }) => (
                         </Svg>
                     ))}
                 </View>
-
-
             ))}
             <Text
                 style={documentStyle.invisiblePadding}
